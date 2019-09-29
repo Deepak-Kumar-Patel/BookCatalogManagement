@@ -1,0 +1,56 @@
+	
+		
+DROP TABLE IF EXISTS `book_catalog`.`author`;
+CREATE TABLE  `book_catalog`.`author` (
+  `auth_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  PRIMARY KEY (`auth_id`),
+  UNIQUE KEY `unique_email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `book_catalog`.`publication`;
+CREATE TABLE  `book_catalog`.`publication` (
+  `publication_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `publication_name` varchar(45) NOT NULL,
+  `publication_regd_id` varchar(45) NOT NULL,
+  PRIMARY KEY (`publication_id`),
+  UNIQUE KEY `unique_publisher_regd_id` (`publication_regd_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `book_catalog`.`publication_type`;
+CREATE TABLE  `book_catalog`.`publication_type` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `type` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `book_catalog`.`book`;
+CREATE TABLE  `book_catalog`.`book` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `author_id` int(10) unsigned NOT NULL,
+  `publication_id` int(10) unsigned NOT NULL,
+  `public_type_id` int(10) unsigned NOT NULL,
+  `title` varchar(45) DEFAULT NULL,
+  `year` date DEFAULT NULL,
+  `genre` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_author_id` (`author_id`),
+  KEY `FK_Publication_id` (`publication_id`),
+  KEY `FK_public_type_id` (`public_type_id`),
+  CONSTRAINT `FKdnlpr03aabg1mfutbsl96skta` FOREIGN KEY (`public_type_id`) REFERENCES `publication_type` (`id`),
+  CONSTRAINT `FKg8qaca1jrg0ol4388sv04bpcv` FOREIGN KEY (`publication_id`) REFERENCES `publication` (`publication_id`),
+  CONSTRAINT `FKklnrv3weler2ftkweewlky958` FOREIGN KEY (`author_id`) REFERENCES `author` (`auth_id`),
+  CONSTRAINT `FK_author_id` FOREIGN KEY (`author_id`) REFERENCES `author` (`auth_id`),
+  CONSTRAINT `FK_Publication_id` FOREIGN KEY (`publication_id`) REFERENCES `publication` (`publication_id`),
+  CONSTRAINT `FK_public_type_id` FOREIGN KEY (`public_type_id`) REFERENCES `publication_type` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `book_catalog`.`user`;
+CREATE TABLE  `book_catalog`.`user` (
+  `username` varchar(255) NOT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
